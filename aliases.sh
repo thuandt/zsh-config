@@ -56,3 +56,49 @@ alias tssh="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 alias fio-r='fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=fio --filename=fio --bs=4k --iodepth=64 --size=4G --readwrite=randread'
 alias fio-w='fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=fio --filename=fio --bs=4k --iodepth=64 --size=4G --readwrite=randwrite'
 alias fio-rw='fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=fio --filename=fio --bs=4k --iodepth=64 --size=4G --readwrite=randrw --rwmixread=75'
+
+### Kubernetes aliases ###
+if [ $commands[kubectl] ]; then
+  alias k="kubectl"
+  alias kg="kubectl get"
+  alias ke="kubectl edit"
+
+  # get
+  alias kn="kubectl get nodes"
+  alias ks="kubectl get svc"
+  alias kd="kubectl get deployment"
+  alias kp="kubectl get pods"
+  alias kpl="kubectl get pods -l"
+  alias kpa="kubectl get pods --all-namespaces"
+
+  # describe
+  alias dsn="kubectl describe node"
+  alias dss="kubectl describe svc"
+  alias dsd="kubectl describe deployment"
+  alias dsp="kubectl describe pod"
+
+  # delete
+  alias ddd="kubectl delete deployment"
+  alias dds="kubectl delete svc"
+  alias ddp="kubectl delete pod"
+
+  alias kl="kubectl logs --tail=50 --follow"
+  alias kx="kubectl exec"
+  alias xx="kubectl exec -ti"
+
+  alias kcf="kubectl create -f"
+  alias kaf="kubectl apply -f"
+  alias kdf="kubectl delete -f"
+
+  alias kmini="kubectl config use-context minikube"
+  alias kdevops="kubectl config use-context devops"
+  alias kstg="kubectl config use-context staging"
+  alias kprod="kubectl config use-context production"
+
+  if [ $commands[gcloud] ]; then
+    alias klabs="gcloud config configurations activate default && kubectl config use-context gke-labs"
+    alias gke-stg="gcloud config configurations activate ins-stg && kubectl config use-context gke-stg"
+    alias gke-prd="gcloud config configurations activate ins-prd && kubectl config use-context gke-prd"
+  fi
+
+fi
