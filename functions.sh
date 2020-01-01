@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 # diff with colors
-function diff() {
+diff() {
   colordiff -u "$@"
 }
 
 # build golang static binary (useful for dockerize)
 # Usage: go_build_static -o app app.go
-function go_build_static() {
+go_build_static() {
   local version
   local timestamp
   local commit
