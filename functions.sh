@@ -12,7 +12,7 @@ go_build_static() {
   local timestamp
   local commit
 
-  version=${version:-dev}
+  version=${1:-dev}
   timestamp="$(TZ=UTC date -u '+%Y-%m-%dT%H:%M:%SZ')"
   commit=$(git rev-parse HEAD)
 
