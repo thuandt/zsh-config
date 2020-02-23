@@ -70,23 +70,17 @@ bashlogger() {
 if [[ "$OSTYPE" == linux* ]]; then
   # Usage: vpn aws up/down
   vpn() {
-    location=${1:-office}
-    action=${2:-up}
-    case ${location} in
-      hk)
-        nmcli con "${action}" id 'PIA - Hong Kong'
+    local server=${1:-sg1}
+    local action=${2:-up}
+    case ${server} in
+      aws)
+        sudo wg-quick "${action}" aws
         ;;
-      us)
-        nmcli con "${action}" id 'PIA - US West'
-        ;;
-      sg)
-        nmcli con "${action}" id 'PIA - Singapore'
-        ;;
-      office)
-        nmcli con "${action}" id 'Office'
+      gcp)
+        sudo wg-quick "${action}" gcp
         ;;
       *)
-        nmcli con "${action}" id 'Office'
+        sudo wg-quick "${action}" "mullvad-${server}"
         ;;
     esac
   }
