@@ -3,6 +3,7 @@
 # use neovim instead vim
 alias vi="nvim"
 alias vim="nvim"
+alias doom="~/.emacs.d/bin/doom"
 
 # use aliases with sudo
 alias sudo='sudo '
@@ -96,9 +97,9 @@ if [ $commands[kubectl] ]; then
   alias kprod="kubectl config use-context production"
 
   if [ $commands[gcloud] ]; then
-    alias klabs="gcloud config configurations activate default && kubectl config use-context gke-labs"
-    alias gke-stg="gcloud config configurations activate ins-stg && kubectl config use-context gke-stg"
-    alias gke-prd="gcloud config configurations activate ins-prd && kubectl config use-context gke-prd"
+    alias gke-lab="gcloud config configurations activate lab && kubectl config use-context lab"
+    alias gke-stg="gcloud config configurations activate stg && kubectl config use-context stg"
+    alias gke-prd="gcloud config configurations activate prd && kubectl config use-context prd"
   fi
 
 fi
