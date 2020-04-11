@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# update JAVA_HOME for asdf
 asdf_update_java_home() {
-    JAVA_HOME=$(realpath $(dirname $(readlink -f $(asdf which java)))/../)
-    export JAVA_HOME
+  # shellcheck disable=SC2046
+  JAVA_HOME=$(realpath $(dirname $(readlink -f $(asdf which java)))/../)
+  export JAVA_HOME
 }
 
 # diff with colors
