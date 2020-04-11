@@ -97,3 +97,6 @@ setopt zle
 
 source ${0:h}/aliases.sh
 source ${0:h}/functions.sh
+
+# Add zsh hook to update JAVA_HOME
+add-zsh-hook precmd asdf_update_java_home

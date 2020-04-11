@@ -1,5 +1,20 @@
 #!/usr/bin/env bash
 
+# update JAVA_HOME for asdf
+asdf_update_java_home() {
+    #shellcheck disable=SC2046
+    ASDF_JAVA_VERSION=$(asdf current java | cut -d ' ' -f1)
+
+    if [[ "${ASDF_JAVA_VERSION}" != "system" ]]; then
+        #shellcheck disable=SC2046
+        JAVA_HOME=$(asdf where java)
+    else
+        #shellcheck disable=SC2046
+        JAVA_HOME=$(realpath $(dirname $(readlink -f $(asdf which java)))/../)
+    fi
+    export JAVA_HOME
+}
+
 # diff with colors
 diff() {
   colordiff -u "$@"
