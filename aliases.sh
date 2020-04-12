@@ -3,7 +3,12 @@
 # use neovim instead vim
 alias vi="nvim"
 alias vim="nvim"
-alias doom="~/.emacs.d/bin/doom"
+
+# doom-emacs
+alias doom="~/.emacs.d/bin/doom --yes"
+alias d-doctor="doom doctor"
+alias d-purge="doom purge -g"
+alias d-upgrade="doom upgrade --yes -f"
 
 # use aliases with sudo
 alias sudo='sudo '
@@ -59,6 +64,7 @@ alias fio-w='fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --n
 alias fio-rw='fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=fio --filename=fio --bs=4k --iodepth=64 --size=4G --readwrite=randrw --rwmixread=75'
 
 ### Kubernetes aliases ###
+# shellcheck disable=SC2154,SC1087,SC2202,SC2086
 if [ $commands[kubectl] ]; then
   alias k="kubectl"
   alias kg="kubectl get"
@@ -96,10 +102,10 @@ if [ $commands[kubectl] ]; then
   alias kstg="kubectl config use-context staging"
   alias kprod="kubectl config use-context production"
 
+  # shellcheck disable=SC2154,SC1087,SC2202,SC2086
   if [ $commands[gcloud] ]; then
     alias gke-lab="gcloud config configurations activate lab && kubectl config use-context lab"
     alias gke-stg="gcloud config configurations activate stg && kubectl config use-context stg"
     alias gke-prd="gcloud config configurations activate prd && kubectl config use-context prd"
   fi
-
 fi
