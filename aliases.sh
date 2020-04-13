@@ -8,7 +8,7 @@ alias vim="nvim"
 alias doom="~/.emacs.d/bin/doom --yes"
 alias d-doctor="doom doctor"
 alias d-purge="doom purge -g"
-alias d-upgrade="doom upgrade --yes -f"
+alias d-upgrade="doom upgrade -f"
 
 # use aliases with sudo
 alias sudo='sudo '
