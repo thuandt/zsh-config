@@ -1,14 +1,38 @@
 #!/usr/bin/env bash
 
-asdf_update_java_home() {
-  # shellcheck disable=SC2046
-  JAVA_HOME=$(realpath $(dirname $(readlink -f $(asdf which java)))/../)
-  export JAVA_HOME
+# shell-style realpath for macOS
+# https://stackoverflow.com/a/18443300/2909743
+command -v realpath >/dev/null 2>&1 || readpath() {
+  OURPWD=$PWD
+  cd "$(dirname "$1")" || exit
+  LINK=$(readlink "$(basename "$1")")
+  while [ "$LINK" ]; do
+    cd "$(dirname "$LINK")" || exit
+    LINK=$(readlink "$(basename "$1")")
+  done
+  REALPATH="$PWD/$(basename "$1")"
+  cd "$OURPWD" || exit
+  echo "$REALPATH"
 }
 
 # diff with colors
 diff() {
   colordiff -u "$@"
+}
+
+# git diff with bat
+batdiff() {
+  git diff --name-only --diff-filter=d 2>/dev/null | xargs bat --diff
+}
+
+# set JAVA_HOME based on asdf version
+asdf_update_java_home() {
+  local java_path
+  java_path="$(asdf which java)"
+  if [[ -n ${java_path} ]]; then
+    JAVA_HOME="$(dirname "$(dirname "$(realpath "${java_path}")")")"
+    export JAVA_HOME
+  fi
 }
 
 # build golang static binary (useful for dockerize)
