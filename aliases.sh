@@ -91,11 +91,19 @@ if [ $commands[kubectl] ]; then
 
   alias kl="kubectl logs --tail=50 --follow"
   alias kx="kubectl exec"
-  alias xx="kubectl exec -ti"
+  # alias xx="kubectl exec -it"
+  xx() {
+    kubectl exec -it "${1}" -- "$@"
+  }
 
   alias kcf="kubectl create -f"
   alias kaf="kubectl apply -f"
   alias kdf="kubectl delete -f"
+
+  # kustomize
+  alias kka="kubectl apply -k"
+  alias kkg="kubectl get -k"
+  alias kkd="kubectl delete -k"
 
   alias kmini="kubectl config use-context minikube"
   alias kdevops="kubectl config use-context devops"
