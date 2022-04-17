@@ -89,7 +89,7 @@ dhparam() {
 
 weather() {
   location=${1:-sgn} # sgn: HCM, han: HN
-  curl -4 "http://wttr.in/${location}"
+  curl -fsSL -4 "https://wttr.in/${location}"
 }
 
 # bashlogger
