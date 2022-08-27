@@ -5,10 +5,10 @@ alias vi="nvim"
 alias vim="nvim"
 
 # doom-emacs
-alias doom="~/.emacs.d/bin/doom --yes"
+alias doom="~/.emacs.d/bin/doom"
 alias d-doctor="doom doctor"
-alias d-purge="doom purge -g"
-alias d-upgrade="doom upgrade -f"
+alias d-purge="doom purge"
+alias d-upgrade="doom upgrade"
 
 # use aliases with sudo
 alias sudo='sudo '
@@ -89,8 +89,8 @@ if [ $commands[kubectl] ]; then
   alias dds="kubectl delete svc"
   alias ddp="kubectl delete pod"
 
-  alias kl="kubectl logs --tail=50 --follow"
   alias kx="kubectl exec"
+  alias klf="kubectl logs --tail=50 --follow"
   # alias xx="kubectl exec -it"
   xx() {
     kubectl exec -it "${1}" -- "$@"
@@ -101,19 +101,21 @@ if [ $commands[kubectl] ]; then
   alias kdf="kubectl delete -f"
 
   # kustomize
-  alias kka="kubectl apply -k"
-  alias kkg="kubectl get -k"
-  alias kkd="kubectl delete -k"
+  alias kz="kustomize"
+  alias kzb="kustomize build --enable-alpha-plugins --enable-helm"
+  alias kza="kubectl apply -k"
+  alias kzg="kubectl get -k"
+  alias kzd="kubectl delete -k"
 
-  alias kmini="kubectl config use-context minikube"
-  alias kdevops="kubectl config use-context devops"
-  alias kstg="kubectl config use-context staging"
-  alias kprod="kubectl config use-context production"
+  alias kcxm="kubectl config use-context minikube"
+  alias kcxl="kubectl config use-context lab"
+  alias kcxn="kubectl config use-context nonprod"
+  alias kcxp="kubectl config use-context prod"
 
   # shellcheck disable=SC2154,SC1087,SC2202,SC2086
   if [ $commands[gcloud] ]; then
-    alias gke-lab="gcloud config configurations activate lab && kubectl config use-context lab"
-    alias gke-stg="gcloud config configurations activate stg && kubectl config use-context stg"
-    alias gke-prd="gcloud config configurations activate prd && kubectl config use-context prd"
+    alias gcxlab="gcloud config configurations activate lab && kubectl config use-context lab"
+    alias gcxnp="gcloud config configurations activate stg && kubectl config use-context nonprod"
+    alias gcxp="gcloud config configurations activate prd && kubectl config use-context prod"
   fi
 fi
