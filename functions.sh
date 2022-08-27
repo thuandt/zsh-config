@@ -192,4 +192,13 @@ openssl-decrypt() {
   openssl aes-256-cbc -d -in "${1}" -out "${2}"
 }
 
+# Create Tailscale one time key
+create-new-tailscale-key() {
+  curl -fsSL -X POST "https://api.tailscale.com/api/v2/tailnet/${TAILNET}/keys" \
+    -u "${TAILSCALE_API_KEY}:" \
+    -H 'Content-Type: application/json' \
+    -d '{"capabilities":{"devices":{"create":{"reusable":false,"ephemeral":false,"preauthorized":true,"tags":[]}}}}' |
+    jq -r '.key'
+}
+
 # End of file
