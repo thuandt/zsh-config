@@ -201,4 +201,26 @@ create-new-tailscale-key() {
     jq -r '.key'
 }
 
+# Access Wireguard VPN via Session Manager
+ssm-vpn() {
+  aws ssm start-session \
+    --target "$(aws ec2 describe-instances \
+      --filters 'Name=tag:Name,Values=wgvpn' \
+      --query 'Reservations[*].Instances[*].InstanceId' \
+      --region ap-southeast-1 \
+      --profile nonprod \
+      --output text)" \
+    --profile nonprod \
+    --region ap-southeast-1
+}
+
+# Access to devops-bastion via Session Manager
+ssm-bastion() {
+  aws ssm start-session \
+    --target "$(aws ec2 describe-instances \
+      --filters 'Name=tag:Name,Values=*devops-bastion' \
+      --query 'Reservations[*].Instances[*].InstanceId' \
+      --output text)"
+}
+
 # End of file
