@@ -179,6 +179,18 @@ create-new-tailscale-key() {
     jq -r '.key'
 }
 
+# Update tailscale-auth-key in all AWS accounts
+update-bastion-tailscale-auth-key() {
+  IFS=" " read -r -A aws_active_profiles <<<"${TAILSCALE_AWS_PROFILES}"
+  for profile in "${aws_active_profiles[@]}"; do
+    export AWS_PROFILE="${profile}"
+    aws secretsmanager put-secret-value \
+      --secret-string "${TAILSCALE_BASTION_AUTH_KEY}" \
+      --secret-id "${TAILSCALE_BASTION_AUTH_KEY_SECRET_ID}"
+  done
+  unset AWS_PROFILE
+}
+
 # Access Wireguard VPN via Session Manager
 ssm-vpn() {
   aws ssm start-session \
