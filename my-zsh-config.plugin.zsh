@@ -98,9 +98,8 @@ setopt zle
 source ${0:h}/aliases.sh
 source ${0:h}/functions.sh
 
-# Add zsh hook to update JAVA_HOME
-autoload -U add-zsh-hook
-add-zsh-hook precmd asdf_update_java_home
+# https://github.com/halcyon/asdf-java#java_home
+source ~/.asdf/plugins/java/set-java-home.zsh
 
 ### Bindkeys ###
 # bind Alt+. to insert last argument of last command

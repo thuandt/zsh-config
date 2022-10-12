@@ -1,20 +1,5 @@
 #!/usr/bin/env bash
 
-# shell-style realpath for macOS
-# https://stackoverflow.com/a/18443300/2909743
-command -v realpath >/dev/null 2>&1 || readpath() {
-  OURPWD=$PWD
-  cd "$(dirname "$1")" || exit
-  LINK=$(readlink "$(basename "$1")")
-  while [ "$LINK" ]; do
-    cd "$(dirname "$LINK")" || exit
-    LINK=$(readlink "$(basename "$1")")
-  done
-  REALPATH="$PWD/$(basename "$1")"
-  cd "$OURPWD" || exit
-  echo "$REALPATH"
-}
-
 # diff with colors
 diff() {
   colordiff -u "$@"
@@ -23,16 +8,6 @@ diff() {
 # git diff with bat
 batdiff() {
   git diff --name-only --diff-filter=d 2>/dev/null | xargs bat --diff
-}
-
-# set JAVA_HOME based on asdf version
-asdf_update_java_home() {
-  local java_path
-  java_path="$(asdf which java)"
-  if [[ -n ${java_path} ]]; then
-    JAVA_HOME="$(dirname "$(dirname "$(realpath "${java_path}")")")"
-    export JAVA_HOME
-  fi
 }
 
 # build golang static binary (useful for dockerize)
@@ -47,11 +22,14 @@ go_build_static() {
   commit=$(git rev-parse HEAD)
 
   # GOOS=linux GOARCH=amd64
-  CGO_ENABLED=0 go build -a -trimpath -ldflags "-s -w \
-                                        -extldflags '-static' \
-                                        -X main.Version=${version} \
-                                        -X main.BuildTime=${timestamp} \
-                                        -X main.GitHash=${commit}" "$@"
+  CGO_ENABLED=0 \
+    go build -a \
+    -trimpath \
+    -ldflags "-s -w \
+              -extldflags '-static' \
+              -X main.Version=${version} \
+              -X main.BuildTime=${timestamp} \
+              -X main.GitHash=${commit}" "$@"
 }
 
 # forwarded port ${2} on server to ${1} on the local (client)
