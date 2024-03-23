@@ -24,6 +24,7 @@ go_build_static() {
   # GOOS=linux GOARCH=amd64
   CGO_ENABLED=0 \
     go build -a \
+    -gcflags=all="-l -B" \
     -trimpath \
     -ldflags "-s -w \
               -extldflags '-static' \
@@ -74,25 +75,6 @@ weather() {
 bashlogger() {
   script /tmp/log.txt
 }
-
-if [[ "$OSTYPE" == linux* ]]; then
-  # Usage: vpn aws up/down
-  vpn() {
-    local server=${1:-sg1}
-    local action=${2:-up}
-    case ${server} in
-      aws)
-        sudo wg-quick "${action}" aws
-        ;;
-      gcp)
-        sudo wg-quick "${action}" gcp
-        ;;
-      *)
-        sudo wg-quick "${action}" "mullvad-${server}"
-        ;;
-    esac
-  }
-fi
 
 # echo "You can simulate on-screen typing just like in the movies" | pv -qL 10
 typing-echo() {
@@ -237,6 +219,18 @@ ssm-bastion() {
       --filters 'Name=tag:Name,Values=*devops-bastion' \
       --query 'Reservations[*].Instances[*].InstanceId' \
       --output text)"
+}
+
+create-airflow-fernet-key() {
+  python -c "import os,base64;print(base64.urlsafe_b64encode(os.urandom(32)).decode())"
+}
+
+create-airflow-webserver-secret-key() {
+  python -c "import os;print(os.urandom(30).hex())"
+}
+
+create-rails-secret-key-base() {
+  openssl rand -hex 64
 }
 
 # End of file
