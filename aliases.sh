@@ -96,13 +96,19 @@ if [ $commands[kubectl] ]; then
     kubectl exec -it "${1}" -- "$@"
   }
 
+  ksh() {
+    kubectl run shell \
+      --image=${1:-"debian:12"} \
+      --command -- /bin/bash -c 'trap : TERM INT; sleep infinity & wait'
+  }
+
   alias kcf="kubectl create -f"
   alias kaf="kubectl apply -f"
   alias kdf="kubectl delete -f"
 
   # kustomize
   alias kz="kustomize"
-  alias kzb="kustomize build --enable-alpha-plugins --enable-helm"
+  alias kzb="kustomize build --enable-alpha-plugins --enable-helm --enable-exec"
   alias kza="kubectl apply -k"
   alias kzg="kubectl get -k"
   alias kzd="kubectl delete -k"
