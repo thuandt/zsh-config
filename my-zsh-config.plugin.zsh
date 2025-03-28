@@ -98,9 +98,6 @@ setopt zle
 source ${0:h}/aliases.sh
 source ${0:h}/functions.sh
 
-# https://github.com/halcyon/asdf-java#java_home
-source ~/.asdf/plugins/java/set-java-home.zsh
-
 ### Bindkeys ###
 # bind Alt+. to insert last argument of last command
 bindkey -M viins '\e.' insert-last-word

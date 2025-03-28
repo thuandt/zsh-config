@@ -138,7 +138,7 @@ openssl-check-key-modulus() {
 }
 
 # Check the modulus of a certificate request
-openssl-check-key-modulus() {
+openssl-check-req-modulus() {
   openssl req -noout -modulus -in "${1}" | shasum -a 256
 }
 
@@ -154,69 +154,18 @@ openssl-decrypt() {
 
 # Create Tailscale one time key
 create-new-tailscale-key() {
-  curl -fsSL -X POST "https://api.tailscale.com/api/v2/tailnet/${TAILNET}/keys" \
-    -u "${TAILSCALE_API_KEY}:" \
+  curl -fsSL -X POST "https://api.tailscale.com/api/v2/tailnet/${1:=${TAILNET}}/keys" \
+    -u "${2:=${TAILSCALE_API_KEY}}:" \
     -H 'Content-Type: application/json' \
-    -d '{"capabilities":{"devices":{"create":{"reusable":false,"ephemeral":false,"preauthorized":true,"tags":[]}}}}' |
+    -d '{"capabilities":{"devices":{"create":{"reusable":true,"ephemeral":false,"preauthorized":true,"tags":[]}}}}' |
     jq -r '.key'
-}
-
-# Update tailscale-auth-key in all AWS accounts
-update-bastion-tailscale-auth-key() {
-  IFS=" " read -r -A aws_active_profiles <<<"${TAILSCALE_AWS_PROFILES}"
-  for profile in "${aws_active_profiles[@]}"; do
-    export AWS_PROFILE="${profile}"
-    aws secretsmanager put-secret-value \
-      --secret-string "${TAILSCALE_BASTION_AUTH_KEY}" \
-      --secret-id "${TAILSCALE_BASTION_AUTH_KEY_SECRET_ID}"
-  done
-  unset AWS_PROFILE
-}
-
-# Access Wireguard VPN via Session Manager
-ssm-vpn() {
-  aws ssm start-session \
-    --target "$(aws ec2 describe-instances \
-      --filters 'Name=tag:Name,Values=wgvpn' \
-      --query 'Reservations[*].Instances[*].InstanceId' \
-      --region ap-southeast-1 \
-      --profile nonprod \
-      --output text)" \
-    --profile nonprod \
-    --region ap-southeast-1
-}
-
-# Access Firezone via Session Manager
-ssm-firezone() {
-  aws ssm start-session \
-    --target "$(aws ec2 describe-instances \
-      --filters 'Name=tag:Name,Values=firezone-wgvpn' \
-      --query 'Reservations[*].Instances[*].InstanceId' \
-      --region ap-southeast-1 \
-      --profile nonprod \
-      --output text)" \
-    --profile nonprod \
-    --region ap-southeast-1
-}
-
-# Access Gitlab via Session Manager
-ssm-gitlab() {
-  aws ssm start-session \
-    --target "$(aws ec2 describe-instances \
-      --filters 'Name=tag:Name,Values=gitlab-ce' \
-      --query 'Reservations[*].Instances[*].InstanceId' \
-      --region ap-southeast-1 \
-      --profile prod \
-      --output text)" \
-    --profile prod \
-    --region ap-southeast-1
 }
 
 # Access to devops-bastion via Session Manager
 ssm-bastion() {
   aws ssm start-session \
     --target "$(aws ec2 describe-instances \
-      --filters 'Name=tag:Name,Values=*devops-bastion' \
+      --filters 'Name=tag:Name,Values=*bastion' \
       --query 'Reservations[*].Instances[*].InstanceId' \
       --output text)"
 }
