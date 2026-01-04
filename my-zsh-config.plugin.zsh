@@ -97,6 +97,7 @@ setopt zle
 
 source ${0:h}/aliases.sh
 source ${0:h}/functions.sh
+source ${0:h}/completions.sh
 
 ### Bindkeys ###
 # bind Alt+. to insert last argument of last command
