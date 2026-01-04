@@ -32,12 +32,21 @@ if [ $commands[cue] ]; then
   source <(cue completion zsh)
 fi
 
+if [ $commands[docker] ]; then
+  source <(docker completion zsh)
+fi
+
 if [ $commands[exercism] ]; then
   source <(exercism completion zsh)
 fi
 
 if [ $commands[flyctl] ]; then
   source <(flyctl completion zsh)
+fi
+
+if [ $commands[gh] ]; then
+  source <(gh completion -s zsh)
+  export MISE_GITHUB_TOKEN=$(gh auth token)
 fi
 
 if [ $commands[glab] ]; then
@@ -67,6 +76,16 @@ fi
 
 if [ $commands[opa] ]; then
   source <(opa completion zsh)
+fi
+
+if [ $commands[pipenv] ]; then
+  source <(_PIPENV_COMPLETE=zsh_source pipenv)
+fi
+
+if [ $commands[poetry] ]; then
+  # fmt: off
+  poetry completions zsh >! ${ZSH_CACHE_DIR}/completions/_poetry
+  # fmt: on
 fi
 
 if [ $commands[yq] ]; then
