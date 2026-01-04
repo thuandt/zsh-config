@@ -165,7 +165,7 @@ create-new-tailscale-key() {
 ssm-bastion() {
   aws ssm start-session \
     --target "$(aws ec2 describe-instances \
-      --filters 'Name=tag:Name,Values=*bastion' \
+      --filters 'Name=tag:Name,Values=*bastion' 'Name=instance-state-name,Values=running' \
       --query 'Reservations[*].Instances[*].InstanceId' \
       --output text)"
 }
@@ -180,6 +180,13 @@ create-airflow-webserver-secret-key() {
 
 create-rails-secret-key-base() {
   openssl rand -hex 64
+}
+
+xkcd() {
+  curl -fsSL "https://xkcd.com/${1}" \
+    | sed -n '/Image URL/s/.*href= "\([^"]\+\)".*/\1/p' \
+    | xargs curl -fsSL --output - \
+    | wezterm imgcat
 }
 
 # End of file
