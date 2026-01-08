@@ -58,9 +58,9 @@ if [ $commands[hugo] ]; then
   source <(hugo completion zsh)
 fi
 
-if [ $commands[infracost] ]; then
-  source <(infracost completion --shell zsh)
-fi
+# if [ $commands[infracost] ]; then
+#   source <(infracost completion --shell zsh)
+# fi
 
 if [ $commands[k6] ]; then
   source <(k6 completion zsh)
