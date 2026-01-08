@@ -4,12 +4,6 @@
 alias vi="nvim"
 alias vim="nvim"
 
-# doom-emacs
-alias doom="~/.emacs.d/bin/doom"
-alias d-doctor="doom doctor"
-alias d-purge="doom purge"
-alias d-upgrade="doom upgrade"
-
 # use aliases with sudo
 alias sudo='sudo '
 
