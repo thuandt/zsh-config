@@ -46,7 +46,6 @@ fi
 
 if [ $commands[gh] ]; then
   source <(gh completion -s zsh)
-  export MISE_GITHUB_TOKEN=$(gh auth token)
 fi
 
 if [ $commands[glab] ]; then
@@ -58,9 +57,9 @@ if [ $commands[hugo] ]; then
   source <(hugo completion zsh)
 fi
 
-# if [ $commands[infracost] ]; then
-#   source <(infracost completion --shell zsh)
-# fi
+if [ $commands[infracost] ]; then
+  infracost completion --shell zsh >! ${ZSH_CACHE_DIR}/completions/_infracost
+fi
 
 if [ $commands[k6] ]; then
   source <(k6 completion zsh)
@@ -79,7 +78,11 @@ if [ $commands[opa] ]; then
 fi
 
 if [ $commands[pipenv] ]; then
-  source <(_PIPENV_COMPLETE=zsh_source pipenv)
+  eval "$(register-python-argcomplete pipx)"
+fi
+
+if [ $commands[pipx] ]; then
+  eval "$(register-python-argcomplete pipenv)"
 fi
 
 if [ $commands[poetry] ]; then
