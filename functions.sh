@@ -189,4 +189,9 @@ xkcd() {
     | wezterm imgcat
 }
 
+install_mise_ollama_rocm() {
+  curl -fSL https://ollama.com/download/ollama-linux-amd64-rocm.tar.zst | \
+  tar --use-compress-program=zstd -x -C ~/.local/share/mise/installs/ollama/latest/
+}
+
 # End of file
