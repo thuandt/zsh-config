@@ -35,11 +35,12 @@ alias ln='ln -vi'
 alias wget='wget -c'
 
 ## What's my public ip address?
-# icanhazip.com
-# ipecho.net/plain
+# ipinfo.io
 # ifconfig.me
 # ifconfig.io
-# ipinfo.io
+# icanhazip.com
+# ipecho.net/plain
+# checkip.amazonaws.com
 alias whatismyip='curl ipecho.net/plain'
 
 # Use ptpython inside virtualenv
@@ -52,10 +53,15 @@ alias rg='rg --hidden'
 # SSH without HostKeyChecking and KnownHosts
 alias tssh="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 
-### BENCHMARK DISK IO ###
+# fio benchmarking
 alias fio-r='fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=fio --filename=fio --bs=4k --iodepth=64 --size=4G --readwrite=randread'
 alias fio-w='fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=fio --filename=fio --bs=4k --iodepth=64 --size=4G --readwrite=randwrite'
 alias fio-rw='fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=fio --filename=fio --bs=4k --iodepth=64 --size=4G --readwrite=randrw --rwmixread=75'
+
+# Flatpak
+alias fl="flatpak list --columns size,application,description"
+alias fla="flatpak list --app --columns size,application,version,runtime"
+alias flr="flatpak list --runtime --columns size,application,branch,version"
 
 ### Kubernetes aliases ###
 # shellcheck disable=SC2154,SC1087,SC2202,SC2086
