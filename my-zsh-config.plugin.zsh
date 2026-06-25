@@ -97,14 +97,10 @@ setopt zle
 
 source ${0:h}/aliases.sh
 source ${0:h}/functions.sh
-source ${0:h}/completions.sh
 
 ### Bindkeys ###
 # bind Alt+. to insert last argument of last command
 bindkey -M viins '\e.' insert-last-word
-
-# Ctrl+Space Accepts and executes the current suggestion
-bindkey '^ ' autosuggest-execute
 
 # Bind terminal-specific up and down keys
 # Bind in both emacs and vi modes so it works in both, and is not
