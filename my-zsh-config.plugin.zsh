@@ -97,27 +97,8 @@ setopt zle
 
 source ${0:h}/aliases.sh
 source ${0:h}/functions.sh
+[ -f "${HOME}/.zsh_private" ] && source "${HOME}/.zsh_private"
 
-### Bindkeys ###
-# bind Alt+. to insert last argument of last command
-bindkey -M viins '\e.' insert-last-word
-
-# Bind terminal-specific up and down keys
-# Bind in both emacs and vi modes so it works in both, and is not
-# sensitive to whether this is loaded before or after the vi-mode plugin
-if [[ -n "$terminfo[kcuu1]" ]]; then
-  bindkey -M emacs "$terminfo[kcuu1]" history-substring-search-up
-  bindkey -M viins "$terminfo[kcuu1]" history-substring-search-up
-fi
-if [[ -n "$terminfo[kcud1]" ]]; then
-  bindkey -M emacs "$terminfo[kcud1]" history-substring-search-down
-  bindkey -M viins "$terminfo[kcud1]" history-substring-search-down
-fi
-
-# bind P and N for EMACS mode
-bindkey -M emacs '^P' history-substring-search-up
-bindkey -M emacs '^N' history-substring-search-down
-
-# bind k and j for VI mode
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
+# Use vivid to generate LS_COLORS
+# Fix Selenized colorscheme for 777 directories
+export LS_COLORS="$(vivid generate solarized-dark):ow=1;7;34:st=30;44:su=30;41"

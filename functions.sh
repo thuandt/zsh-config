@@ -67,7 +67,7 @@ dhparam() {
 }
 
 weather() {
-  location=${1:-sgn} # sgn: HCM, han: HN
+  location=${1:-Hanoi}
   curl -fsSL -4 "https://wttr.in/${location}"
 }
 
@@ -187,11 +187,6 @@ xkcd() {
     | sed -n '/Image URL/s/.*href= "\([^"]\+\)".*/\1/p' \
     | xargs curl -fsSL --output - \
     | wezterm imgcat
-}
-
-install_mise_ollama_rocm() {
-  curl -fSL https://ollama.com/download/ollama-linux-amd64-rocm.tar.zst | \
-  tar --use-compress-program=zstd -x -C ~/.local/share/mise/installs/ollama/latest/
 }
 
 # End of file
