@@ -4,7 +4,19 @@
 alias vi="nvim"
 alias vim="nvim"
 
+# lsd
+alias l='command lsd --almost-all --long'
+alias ls='command lsd'
+alias lsa='command lsd --almost-all --long'
+alias ll='command lsd --almost-all --header --long'
+alias llm='command lsd --almost-all --header --long --sort time'
+alias la='command lsd --almost-all'
+alias lla='command lsd --almost-all --long'
+alias lt='command lsd --tree'
+alias tree='command lsd --tree'
+
 # use aliases with sudo
+alias _='sudo '
 alias sudo='sudo '
 
 alias mkdir='mkdir -p'

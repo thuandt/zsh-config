@@ -102,3 +102,7 @@ source ${0:h}/functions.sh
 # Use vivid to generate LS_COLORS
 # Fix Selenized colorscheme for 777 directories
 export LS_COLORS="$(vivid generate solarized-dark):ow=1;7;34:st=30;44:su=30;41"
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+# Midnight Commander
+export MC_SKIN="${XDG_CONFIG_HOME}/mc/selenized.ini"
